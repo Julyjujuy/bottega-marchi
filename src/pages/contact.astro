@@ -1,0 +1,22 @@
+---
+import Base from "../layouts/Base.astro";
+const p = new URL(Astro.request.url).searchParams;
+const product = p.get("product") ?? "";
+const subject = p.get("subject") ?? (product ? `Inquiry: ${product}` : "New inquiry");
+const mail = `mailto:info@bottegamarchi.com?subject=${encodeURIComponent(subject)}`;
+---
+<Base title="Contact – Bottega Marchi">
+  <main class="page max-w-xl space-y-5">
+    <h2 class="brand text-xl">Contact</h2>
+    <p class="quiet">For enquiries {product && <>about <strong>{product}</strong></>}, please email us.</p>
+    <a href={mail} class="brand underline">Open your email client</a>
+
+    <!-- Optional simple form that posts nowhere (we can swap to Formspree or PHP later) -->
+    <form action={mail} method="get" class="pt-4 space-y-3">
+      <input type="hidden" name="subject" value={subject} />
+      <label class="block text-sm">Message</label>
+      <textarea class="w-full rounded-lg p-3" rows="6" name="body" placeholder="Your message…"></textarea>
+      <button type="submit" class="brand underline">Send via email client</button>
+    </form>
+  </main>
+</Base>

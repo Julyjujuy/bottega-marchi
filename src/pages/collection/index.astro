@@ -1,0 +1,23 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getCollection } from "astro:content";
+const products = await getCollection("products");
+---
+<Base title="Collection – Bottega Marchi">
+  <main class="page">
+    <h2 class="brand text-xl mb-8">Collection</h2>
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      {products.map(p => (
+        <li>
+          <a href={`/collection/${p.data.slug}`} class="group block">
+            <img src={p.data.cover} alt={p.data.title} class="w-full rounded-xl transition-transform duration-300 group-hover:scale-[1.01]" />
+            <div class="mt-3 text-sm flex items-baseline justify-between">
+              <span>{p.data.title}</span>
+              <span class="opacity-60">View</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>

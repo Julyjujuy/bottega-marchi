@@ -1,16 +1,30 @@
 ---
-
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+const products = await getCollection("products");
 ---
+<Base title="Bottega Marchi – Home">
+  <main class="relative h-[70vh] sm:h-[85vh] overflow-hidden rounded-2xl mx-5">
+    <div
+      class="absolute inset-0 bg-center bg-cover"
+      style={`background-image:url(${HERO}); animation:pan 24s linear infinite alternate;`}
+      role="img" aria-label="Bottega Marchi workshop"
+    ></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <h1 class="brand text-[clamp(28px,6vw,54px)] text-[var(--text-bright)] drop-shadow">
+        Bottega&nbsp;Marchi
+      </h1>
+    </div>
+  </main>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <style>
+    @keyframes pan {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    /* mobile: preserve center; tall screens: keep full-bleed look */
+    @media (max-width: 640px){
+      main > div:first-child{ background-size: cover; }
+    }
+  </style>
+</Base>

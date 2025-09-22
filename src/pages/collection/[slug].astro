@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+const { slug } = Astro.params;
+const all = await getCollection("products");
+const item = all.find(p => p.data.slug === slug);
+if (!item) throw new Error("Product not found");
+const imgs = item.data.images.slice(0,3);
+const subject = encodeURIComponent(`Inquiry: ${item.data.title}`);
+const contactHref = `/contact?product=${encodeURIComponent(item.data.title)}&subject=${subject}`;
+---
+
+<Base title={`${item.data.title} – Bottega Marchi`}>
+  <main class="page max-w-3xl">
+    <h1 class="brand text-xl mb-4">{item.data.title}</h1>
+    <p class="quiet mb-6">{item.data.summary}</p>
+
+    <div class="grid gap-6">
+      {imgs.map((src) => <img src={src} alt={item.data.title} class="w-full rounded-xl" />)}
+    </div>
+
+    <div class="mt-8">
+      <a href={contactHref} class="brand underline">Contact about this piece</a>
+    </div>
+  </main>
+</Base>

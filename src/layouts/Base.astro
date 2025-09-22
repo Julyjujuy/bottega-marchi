@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+const { title = "Bottega Marchi" } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+
+    <!-- Montserrat -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind already injected; add a few custom vars -->
+    <style>
+      :root{
+        --bg:#9dd1d4;
+        --text:#0b1f22;       /* dark text */
+        --text-bright:#f8fdff;/* “very bright” option for overlays */
+        --maxw: 1080px;
+      }
+      body{ background:var(--bg); font-family:"Montserrat",system-ui,Arial,sans-serif; }
+      .page{ max-width:var(--maxw); margin:0 auto; padding:48px 20px; }
+      .brand{ letter-spacing:.2em; text-transform:uppercase; font-weight:600; }
+      .nav a{ font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; }
+      .quiet{ color:#14363b; opacity:.85; }
+    </style>
+  </head>
+  <body class="text-[17px] text-[var(--text)]">
+    <header class="page flex items-center justify-between">
+      <a href="/" class="brand">Bottega&nbsp;Marchi</a>
+      <nav class="nav flex gap-6">
+        <a href="/about">About</a>
+        <a href="/collection">Collection</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </header>
+    <slot />
+    <footer class="page quiet text-sm">
+      © {new Date().getFullYear()} Bottega Marchi
+    </footer>
+  </body>
+</html>
