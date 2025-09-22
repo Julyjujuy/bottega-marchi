@@ -1,10 +1,9 @@
 ---
-import Base from "../../layouts/Base.astro";
-import { getCollection } from "astro:content";
-const products = await getCollection("products");
+import Base from "../layouts/Base.astro";
+const HERO = "/images/Homepage_image.jpg";
 ---
 <Base title="Bottega Marchi – Home">
-  <main class="relative h-[70vh] sm:h-[85vh] overflow-hidden rounded-2xl mx-5">
+<main class="relative h-[70vh] sm:h-[85vh] overflow-hidden rounded-2xl mx-6 sm:mx-8">
     <div
       class="absolute inset-0 bg-center bg-cover"
       style={`background-image:url(${HERO}); animation:pan 24s linear infinite alternate;`}
@@ -22,7 +21,6 @@ const products = await getCollection("products");
       0%   { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
-    /* mobile: preserve center; tall screens: keep full-bleed look */
     @media (max-width: 640px){
       main > div:first-child{ background-size: cover; }
     }

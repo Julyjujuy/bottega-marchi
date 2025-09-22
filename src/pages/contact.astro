@@ -1,22 +1,169 @@
 ---
 import Base from "../layouts/Base.astro";
+
+// Prefill from URL (?title=… or ?product=… or ?item=…)
 const p = new URL(Astro.request.url).searchParams;
-const product = p.get("product") ?? "";
-const subject = p.get("subject") ?? (product ? `Inquiry: ${product}` : "New inquiry");
-const mail = `mailto:info@bottegamarchi.com?subject=${encodeURIComponent(subject)}`;
+const title = p.get("title") || p.get("product") || p.get("item") || "";
+const subject = p.get("subject") || (title ? `Inquiry: ${title}` : "New inquiry");
+const defaultMessage = title
+  ? `I'm interested in: ${title}\n\nAre you interested in a particular object or do you need a particular work done?`
+  : "";
 ---
 <Base title="Contact – Bottega Marchi">
-  <main class="page max-w-xl space-y-5">
-    <h2 class="brand text-xl">Contact</h2>
-    <p class="quiet">For enquiries {product && <>about <strong>{product}</strong></>}, please email us.</p>
-    <a href={mail} class="brand underline">Open your email client</a>
+  <main class="page">
+    <section class="max-w-[800px] mx-auto px-6 sm:px-8 md:px-10 lg:px-12">
+      <h2 class="brand text-xl mb-2">Contact</h2>
+      <p class="quiet text-sm mb-6">
+        Questions, custom requests, or commissions — send a note below.
+      </p>
 
-    <!-- Optional simple form that posts nowhere (we can swap to Formspree or PHP later) -->
-    <form action={mail} method="get" class="pt-4 space-y-3">
-      <input type="hidden" name="subject" value={subject} />
-      <label class="block text-sm">Message</label>
-      <textarea class="w-full rounded-lg p-3" rows="6" name="body" placeholder="Your message…"></textarea>
-      <button type="submit" class="brand underline">Send via email client</button>
-    </form>
+      {title && <p class="quiet mb-3">Regarding: <strong>{title}</strong></p>}
+
+      <!-- Status message (hidden until shown by JS) -->
+      <div id="form-status"
+           class="mb-5 hidden text-sm bg-white/90 text-[#0b1f22] rounded-lg p-3"
+           role="status" aria-live="polite"></div>
+
+      <!-- Keep action for progressive enhancement; JS will intercept -->
+      <form id="contact-form"
+            action="https://formspree.io/f/xandzrdw" 
+            method="POST"
+            class="space-y-4">
+        <!-- Context (client JS will update these too) -->
+        <input type="hidden" id="subject-hidden" name="subject" value={subject} />
+        <input type="hidden" id="product-hidden" name="product" value={title} />
+        <!-- Honeypot -->
+        <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+
+        <div>
+          <label class="block text-sm mb-1">Your Name</label>
+          <input
+            type="text"
+            name="name"
+            required
+            class="w-full rounded-lg p-3 bg-white/90 text-[#0b1f22] placeholder:text-[#0b1f22]/60"
+            placeholder="Your name"
+            autocomplete="name"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm mb-1">Email</label>
+          <input
+            type="email"
+            name="email"
+            required
+            class="w-full rounded-lg p-3 bg-white/90 text-[#0b1f22] placeholder:text-[#0b1f22]/60"
+            placeholder="you@example.com"
+            autocomplete="email"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm mb-1">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="7"
+            required
+            class="w-full rounded-lg p-3 bg-white/90 text-[#0b1f22] placeholder:text-[#0b1f22]/60"
+            placeholder="Are you interested in a particular object or do you need a particular work done?"
+          >{defaultMessage}</textarea>
+        </div>
+
+        <button id="submit-btn" type="submit" class="brand underline">
+          Send message
+        </button>
+
+        <p class="quiet text-xs">
+          We’ll reply by email. Your details are used only to answer your enquiry.
+        </p>
+      </form>
+
+      <!-- Addresses -->
+      <div class="mt-10 space-y-3 text-sm leading-relaxed">
+        <h3 class="brand text-sm">Addresses</h3>
+
+        <address class="not-italic">
+          <span class="brand">Venezia</span><br />
+          Dorsoduro 2132
+        </address>
+
+        <address class="not-italic">
+          <span class="brand">Stuttgart</span><br />
+          Kleinhohenheimer&nbsp;Str.&nbsp;5,&nbsp;70619
+        </address>
+      </div>
+    </section>
   </main>
+
+  <!-- Prefill from query string + AJAX submit: stay on page, show local success/fail -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Prefill from ?title= (or ?product= / ?item=)
+      const params = new URLSearchParams(window.location.search);
+      const t = params.get('title') || params.get('product') || params.get('item') || '';
+
+      const msg = document.getElementById('message');
+      const subj = document.getElementById('subject-hidden');
+      const prod = document.getElementById('product-hidden');
+
+      if (t) {
+        const pre = `I'm interested in: ${t}\n\nAre you interested in a particular object or do you need a particular work done?`;
+        if (msg && !msg.value.trim()) msg.value = pre; // only set if empty
+        if (subj) subj.value = `Inquiry: ${t}`;
+        if (prod) prod.value = t;
+      }
+
+      // AJAX submit
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
+      const submitBtn = document.getElementById('submit-btn');
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status?.classList.add('hidden');
+        if (submitBtn) submitBtn.disabled = true;
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            if (status) {
+              status.textContent = 'Message sent.';
+              status.classList.remove('hidden');
+            }
+            form.reset();
+            // re-apply prefill after reset if a product was specified
+            if (t && msg) msg.value = `I'm interested in: ${t}\n\nAre you interested in a particular object or do you need a particular work done?`;
+            if (t && subj) subj.value = `Inquiry: ${t}`;
+            if (t && prod) prod.value = t;
+          } else {
+            let msgText = 'Sorry, something went wrong. Please try again.';
+            try {
+              const data = await res.json();
+              if (data && Array.isArray(data.errors) && data.errors.length) {
+                msgText = data.errors.map(e => e.message).join(', ');
+              }
+            } catch {}
+            if (status) {
+              status.textContent = msgText;
+              status.classList.remove('hidden');
+            }
+          }
+        } catch {
+          if (status) {
+            status.textContent = 'Network error. Please try again.';
+            status.classList.remove('hidden');
+          }
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      });
+    });
+  </script>
 </Base>

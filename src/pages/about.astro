@@ -2,14 +2,35 @@
 import Base from "../layouts/Base.astro";
 ---
 <Base title="About – Bottega Marchi">
-  <main class="page grid md:grid-cols-2 gap-10 items-start">
-    <img src="/images/About_image.jpg" alt="Artist portrait" class="w-full rounded-xl"/>
-    <div class="space-y-4 leading-relaxed">
-      <h2 class="brand text-xl">About</h2>
-      <p class="max-w-prose">
-        Bottega Marchi creates handcrafted, minimal pieces with quiet details and durable joinery.
-        Each object is made in small numbers, focusing on proportion, material honesty, and longevity.
-      </p>
-    </div>
+  <main class="page">
+    <section class="max-w-[1200px] mx-auto px-6 sm:px-8 md:px-10 lg:px-12">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <img
+          src="/images/About_image.jpg"
+          alt="Emanuele at work in the studio"
+          class="w-full h-auto rounded-xl mx-auto md:mx-0 block"
+          loading="eager"
+        />
+
+        <div class="space-y-5 leading-relaxed pt-2">
+          <h2 class="brand text-xl">About</h2>
+
+          <p class="max-w-prose">
+            Born in Venice and now based in Stuttgart, Emanuele crafts frames, mirrors, and sculptural wood objects entirely by hand.
+            Each creation follows the natural flow of the wood, celebrating movement, texture, and light.
+          </p>
+
+          <p class="max-w-prose">
+            With a sharp eye for detail and a deep respect for traditional craftsmanship, Emanuele brings custom commissions to life —
+            from intricate carvings to bespoke frames and unique wooden objects.
+          </p>
+
+          <p class="max-w-prose">
+            He welcomes collaborations, travels for projects, and is available for appointments to discuss your vision and tailor every
+            detail to your needs.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 </Base>

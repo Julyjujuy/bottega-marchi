@@ -1,26 +1,74 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-const { slug } = Astro.params;
-const all = await getCollection("products");
-const item = all.find(p => p.data.slug === slug);
-if (!item) throw new Error("Product not found");
-const imgs = item.data.images.slice(0,3);
-const subject = encodeURIComponent(`Inquiry: ${item.data.title}`);
-const contactHref = `/contact?product=${encodeURIComponent(item.data.title)}&subject=${subject}`;
+
+/** Build static pages for each product */
+export async function getStaticPaths() {
+  const all = await getCollection("products");
+  return all.map(({ data }) => ({
+    params: { slug: data.slug },
+    props: { item: data }
+  }));
+}
+
+/** Receive the product passed by getStaticPaths */
+const { item } = Astro.props;
+
+// Natural images: first = main (or cover), rest = additional views
+const imgs = (item.images && item.images.length ? item.images : [item.cover]);
+const [mainImg, ...thumbs] = imgs;
+
+const subject = encodeURIComponent(`Inquiry: ${item.title}`);
+const contactHref = `/contact?title=${encodeURIComponent(item.title)}&subject=${subject}`;
+
 ---
+<Base title={`${item.title} – Bottega Marchi`}>
+  <main class="page">
+    <!-- On mobile it's a single column (text first), on md+ it's two columns -->
+    <div class="mt-8 grid md:grid-cols-[minmax(0,520px)_minmax(0,680px)] gap-14 items-start">
 
-<Base title={`${item.data.title} – Bottega Marchi`}>
-  <main class="page max-w-3xl">
-    <h1 class="brand text-xl mb-4">{item.data.title}</h1>
-    <p class="quiet mb-6">{item.data.summary}</p>
+      <!-- TEXT (mobile gets side padding; desktop uses grid gutter) -->
+      <section class="px-4 md:px-0 space-y-5 max-w-prose pt-3 md:pt-3 md:pl-10">
+        <h1 class="brand text-xl">{item.title}</h1>
+        {item.subtitle && <p class="italic opacity-70">{item.subtitle}</p>}
 
-    <div class="grid gap-6">
-      {imgs.map((src) => <img src={src} alt={item.data.title} class="w-full rounded-xl" />)}
-    </div>
+        <p class="quiet">{item.summary}</p>
 
-    <div class="mt-8">
-      <a href={contactHref} class="brand underline">Contact about this piece</a>
+        {Array.isArray(item.specs) && item.specs.length > 0 && (
+          <ul class="text-sm opacity-80 space-y-1 pt-2">
+            {item.specs.map((s) => <li>{s}</li>)}
+          </ul>
+        )}
+
+        <div class="pt-2 flex items-center gap-6">
+          <a href="/collection" class="brand underline">← Back to collection</a>
+          <a href={contactHref} class="brand underline">Contact about this piece</a>
+        </div>
+      </section>
+
+      <!-- IMAGES (mobile gets side padding so photos don't touch edges) -->
+      <section class="px-4 md:px-0 w-full md:pr-2">
+        <!-- Main image: scales to column width; natural height -->
+        <img
+          src={mainImg}
+          alt={item.title}
+          class="w-full h-auto rounded-xl block"
+          loading="eager"
+        />
+
+        {thumbs.length > 0 && (
+          <div class="grid grid-cols-2 gap-6 mt-8">
+            {thumbs.map((src) => (
+              <img
+                src={src}
+                alt={`${item.title} – view`}
+                class="w-full h-auto rounded-xl block"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   </main>
 </Base>
