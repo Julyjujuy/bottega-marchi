@@ -1,0 +1,45 @@
+{
+  "title": "Tracce Series",
+  "slug": "tracce",
+  "cover": "/images/Tracce.jpg",
+  "description": "Le Tracce Series takes its inspiration from the traditional chiselling techniques used in decorative carvings on a Venetian gondola. By striking the surface with a burin, artisans concealed the marks of their tools while creating a background alive with movement and texture. The same technique can be found in embellishing architectural elements throughout Venice. Reinterpreted here in oak, maple or ashwood, the technique enhances the natural grain of each wood.",
+  "order": 2,
+  "specs": {
+    "lamp": "Dimensions small\nWxDxH: 10x10x30 cm\n250 €\n200 € without lampshade\nexcl. shipping\n\nDimensions large\nWxDxH: 12x12x50 cm\n350 €\n300 € without lampshade\nexcl. shipping\n\nAvailable in oak, maple or ashwood. Oil finished.\nCable length and colour as well as the switch function be modified upon request.",
+    "tray": "Dimensions small\nWxDxH: 30x15x4 cm\n45 €\nexcl. shipping\n\nDimensions large\nWxDxH: 50x15x4 cm\n65 €\nexcl. shipping\n\nAvailable in oak, maple and ash. Oil finished."
+  },
+  "pieces": [
+  {
+    "title": "Column Lamp",
+    "slug": "tracce-lamp-a",
+    "cover": "/images/A1_Tracce.jpg",
+    "images": ["/images/A1_Tracce.jpg","/images/A2_Tracce.jpg"],
+    "type": "lamp",
+    "order": 1
+  },
+  {
+    "title": "Pyramid Lamp",
+    "slug": "tracce-lamp-b",
+    "cover": "/images/B1_Tracce.jpg",
+    "images": ["/images/B1_Tracce.jpg","/images/B2_Tracce.jpg","/images/B3_Tracce.jpg"],
+    "type": "lamp",
+    "order": 2
+  },
+  {
+    "title": "Tray",
+    "slug": "tracce-tray-c",
+    "cover": "/images/C1_Tracce.jpg",
+    "images": ["/images/C1_Tracce.jpg","/images/C2_Tracce.jpg","/images/C3_Tracce.jpg","/images/C4_Tracce.jpg","/images/C5_Tracce.jpg"],
+    "type": "tray",
+    "order": 3
+  },
+  {
+    "title": "Tray",
+    "slug": "tracce-tray-d",
+    "cover": "/images/D1_Tracce.jpg",
+    "images": ["/images/D1_Tracce.jpg","/images/D2_Tracce.jpg","/images/D3_Tracce.jpg","/images/D4_Tracce.jpg","/images/D5_Tracce.jpg"],
+    "type": "tray",
+    "order": 4
+  }
+]
+}

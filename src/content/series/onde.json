@@ -1,0 +1,29 @@
+{
+  "title": "Onde Series",
+  "slug": "onde",
+  "cover": "/images/Onde.jpg",
+  "description": "Le Onde Series translates the movement of Venetian canals into clean flowing lines. Each piece responds to the natural grain of the wood, creating a wave pattern that is entirely unique. Hand-carved with precision, these objects reflect both the artistry of traditional Venetian craftsmanship and a contemporary aesthetic — elegant and distinctive.",
+  "order": 3,
+  "specs": {
+    "table": "Dimensions small\nWxDxH: 30x15x4 cm\n45 €\nexcl. shipping\n\nDimensions large\nWxDxH: 50x15x4 cm\n65 €\nexcl. shipping\n\nAvailable in oak, maple and ash. Oil finished.",
+    "mirror": "Dimensions small\nWxDxH: 30x15x4 cm\n45 €\nexcl. shipping\n\nDimensions large\nWxDxH: 50x15x4 cm\n65 €\nexcl. shipping\n\nAvailable in oak, maple and ash. Oil finished."
+  },
+  "pieces": [
+  {
+    "title": "Side Table",
+    "slug": "onde-table-a",
+    "cover": "/images/A1_onde.jpg",
+    "images": ["/images/A1_onde.jpg","/images/A2_onde.jpg","/images/A3_onde.jpg","/images/A4_onde.jpg","/images/A5_onde.jpg"],
+    "type": "table",
+    "order": 1
+  },
+  {
+    "title": "Mirror Frame",
+    "slug": "onde-frame-b",
+    "cover": "/images/B1_onde.jpg",
+    "images": ["/images/B1_onde.jpg","/images/B2_onde.jpg","/images/B3_onde.jpg","/images/B4_onde.jpg"],
+    "type": "mirror",
+    "order": 2
+  }
+]
+}

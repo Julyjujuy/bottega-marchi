@@ -1,0 +1,138 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const ss = await getCollection("series");
+  const paths = [];
+  for (const { data } of ss) {
+    for (const p of (data.pieces ?? [])) {
+      paths.push({
+        params: { series: data.slug, slug: p.slug },
+        props: {
+          piece: p,
+          seriesSlug: data.slug,
+          seriesTitle: data.title,
+          specs: data.specs ?? {}
+        }
+      });
+    }
+  }
+  return paths;
+}
+
+const { piece, seriesSlug, seriesTitle, specs } = Astro.props;
+const imgs = piece.images?.length ? piece.images : [piece.cover];
+const subject = encodeURIComponent(`Inquiry: ${piece.title}${piece.subtitle ? " — " + piece.subtitle : ""}`);
+const contactHref = `/contact?title=${encodeURIComponent(piece.title)}&subject=${subject}`;
+const specText = piece.type ? specs[piece.type] : undefined;
+---
+<Base title={`${piece.title}${piece.subtitle ? " — " + piece.subtitle : ""} – Bottega Marchi`}>
+  <main class="page">
+    <section class="max-w-[1200px] mx-auto px-6 sm:px-8 md:px-10 lg:px-12">
+      <div class="grid md:grid-cols-[minmax(0,600px)_minmax(0,520px)] gap-12 lg:gap-16 items-start">
+
+        <!-- LEFT: swipe/arrow carousel (scrollbar hidden) -->
+        <div class="relative">
+          <div id="carousel" class="no-scrollbar flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth rounded-xl">
+            {imgs.map((src) => (
+              <div class="min-w-full snap-center">
+                <img src={src} alt={piece.title} class="w-full h-auto rounded-xl block" loading="eager" />
+              </div>
+            ))}
+          </div>
+
+          <!-- Elegant chevron arrows -->
+          <button
+            type="button"
+            aria-label="Previous image"
+            class="arrow arrow-left"
+            onclick="(function(){const c=document.getElementById('carousel'); c && c.scrollBy({left:-c.clientWidth, behavior:'smooth'});})()"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            aria-label="Next image"
+            class="arrow arrow-right"
+            onclick="(function(){const c=document.getElementById('carousel'); c && c.scrollBy({left:c.clientWidth, behavior:'smooth'});})()"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- RIGHT: text/specs -->
+        <div class="max-w-prose">
+          <h1 class="brand text-xl">
+            {piece.title}{piece.subtitle && <> — <span class="opacity-80">{piece.subtitle}</span></>}
+          </h1>
+          {piece.summary && <p class="quiet mt-3">{piece.summary}</p>}
+
+          {specText && (
+            <div class="mt-6 text-sm whitespace-pre-line">
+              {specText}
+            </div>
+          )}
+
+          {!specText && (
+            <div class="mt-6 space-y-2 text-sm">
+              {piece.dimensions && (<p><strong>Dimensions</strong><br />{piece.dimensions}</p>)}
+              {piece.price && (<p><strong>Price</strong><br />{piece.price}</p>)}
+              {piece.materials && <p>{piece.materials}</p>}
+              {piece.availability && <p>{piece.availability}</p>}
+              {piece.lead_time && <p>{piece.lead_time}</p>}
+            </div>
+          )}
+
+          <div class="pt-4 flex items-center gap-6">
+            <a href={`/series/${seriesSlug}`} class="brand underline">← Back to {seriesTitle}</a>
+            <a href={contactHref} class="brand underline">Contact about this piece</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>
+
+<style is:global>
+  /* Hide horizontal scrollbar on the carousel */
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* Elegant chevron buttons */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* 44x44 tap target for mobile accessibility */
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; cursor: pointer;
+    color: rgba(11,31,34,0.75);           /* dark teal from your palette */
+    transition: opacity .2s ease, transform .2s ease;
+    text-shadow: 0 1px 2px rgba(255,255,255,.55), 0 1px 2px rgba(0,0,0,.15);
+  }
+  .arrow:hover { opacity: 1; }
+  .arrow:active { transform: translateY(-50%) scale(0.97); }
+  .arrow:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 9999px;
+  }
+  .arrow svg { width: 22px; height: 22px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.25)); }
+
+  /* Mobile: keep arrows just inside the image */
+  .arrow-left  { left: 8px; }
+  .arrow-right { right: 8px; }
+
+  /* ≥640px (sm): place arrows just OUTSIDE the image for a clean look */
+  @media (min-width: 640px) {
+    .arrow-left  { left: -38px; }
+    .arrow-right { right: -38px; }
+  }
+</style>
