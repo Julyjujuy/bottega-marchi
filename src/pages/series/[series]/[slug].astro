@@ -25,6 +25,13 @@ const { piece, seriesSlug, seriesTitle, specs } = Astro.props;
 const imgs = piece.images?.length ? piece.images : [piece.cover];
 const subject = encodeURIComponent(`Inquiry: ${piece.title}${piece.subtitle ? " — " + piece.subtitle : ""}`);
 const contactHref = `/contact?title=${encodeURIComponent(piece.title)}&subject=${subject}`;
+const isLineeLamp =
+  seriesSlug === 'linee' &&
+  ((piece.type && piece.type.toLowerCase() === 'lamp') || /lamp/i.test(piece.title));
+
+const lineeLampCraft =
+  'The wood is hand-carved across the grain, a technique that reveals subtle textures and rhythms in the wood. Crafted from basswood, a material prized for its softness and fine grain, the piece balances tradition and contemporary design, echoing the spirit of Giudecca itself.';
+
 const specText = piece.type ? specs[piece.type] : undefined;
 ---
 <Base title={`${piece.title}${piece.subtitle ? " — " + piece.subtitle : ""} – Bottega Marchi`}>
@@ -67,33 +74,43 @@ const specText = piece.type ? specs[piece.type] : undefined;
         </div>
 
         <!-- RIGHT: text/specs -->
-        <div class="max-w-prose">
-          <h1 class="brand text-xl">
-            {piece.title}{piece.subtitle && <> — <span class="opacity-80">{piece.subtitle}</span></>}
-          </h1>
-          {piece.summary && <p class="quiet mt-3">{piece.summary}</p>}
+       <div class="max-w-prose">
+  <h1 class="brand text-xl">
+    {piece.title}{piece.subtitle && <> — <span class="opacity-80">{piece.subtitle}</span></>}
+  </h1>
+  {piece.summary && <p class="quiet mt-3">{piece.summary}</p>}
 
-          {specText && (
-            <div class="mt-6 text-sm whitespace-pre-line">
-              {specText}
-            </div>
-          )}
+  {/* NEW: always show this first when Linee + lamp */}
+  {isLineeLamp && (
+    <p class="mt-6 text-sm">
+      {lineeLampCraft}
+    </p>
+  )}
 
-          {!specText && (
-            <div class="mt-6 space-y-2 text-sm">
-              {piece.dimensions && (<p><strong>Dimensions</strong><br />{piece.dimensions}</p>)}
-              {piece.price && (<p><strong>Price</strong><br />{piece.price}</p>)}
-              {piece.materials && <p>{piece.materials}</p>}
-              {piece.availability && <p>{piece.availability}</p>}
-              {piece.lead_time && <p>{piece.lead_time}</p>}
-            </div>
-          )}
+  {specText ? (
+    /* Series-level spec text present (whitespace preserved) */
+    <div class="mt-3 text-sm whitespace-pre-line">
+      {specText}
+    </div>
+  ) : (
+    /* Fallback field-by-field rendering (no series-level spec) */
+    <div class="mt-6 space-y-2 text-sm">
+      {piece.dimensions && (<p><strong>Dimensions</strong><br />{piece.dimensions}</p>)}
+      {piece.price && (<p><strong>Price</strong><br />{piece.price}</p>)}
+      {/* NOTE: removed isLineeLamp paragraph from here */}
+      {piece.materials && <p>{piece.materials}</p>}
+      {piece.availability && <p>{piece.availability}</p>}
+      {piece.lead_time && <p>{piece.lead_time}</p>}
+    </div>
+  )}
 
-          <div class="pt-4 flex items-center gap-6">
-            <a href={`/series/${seriesSlug}`} class="brand underline">← Back to {seriesTitle}</a>
-            <a href={contactHref} class="brand underline">Contact about this piece</a>
-          </div>
-        </div>
+  <div class="pt-4 flex items-center gap-6">
+    <a href={`/series/${seriesSlug}`} class="brand underline">← Back to {seriesTitle}</a>
+    <a href={contactHref} class="brand underline">Contact about this piece</a>
+  </div>
+</div>
+
+
       </div>
     </section>
   </main>

@@ -15,7 +15,9 @@
     "cover": "/images/A1_Linee.jpg",
     "images": ["/images/A1_Linee.jpg","/images/A2_Linee.jpg","/images/A3_Linee.jpg"],
     "type": "lamp",
-    "order": 1
+    "order": 1,
+    "coverFocusY": 44,
+  "coverScale": 0.985
   },
   {
     "title": "Pyramid Lamp",
@@ -23,7 +25,9 @@
     "cover": "/images/B1_Linee.jpg",
     "images": ["/images/B1_Linee.jpg","/images/B2_Linee.jpg","/images/B3_Linee.jpg"],
     "type": "lamp",
-    "order": 2
+    "order": 2,
+    "coverFocusY": 46,
+  "coverScale": 0.985
   },
   {
     "title": "Tray",

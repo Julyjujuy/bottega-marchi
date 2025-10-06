@@ -38,6 +38,9 @@ const pieceSchema = z.object({
   availability: z.string().optional(),
   lead_time: z.string().optional(),
   order: z.number().optional(),
+  // add to pieceSchema:
+coverFocusY: z.number().min(0).max(100).optional(), // % from top; 50 = center
+coverScale:  z.number().min(0.9).max(1.1).optional(), // 1 = no zoom, 0.985 = slight zoom-out
 });
 
 /** Series */

@@ -1,18 +1,28 @@
 ---
 import Base from "../layouts/Base.astro";
+
 const HERO = "/images/Homepage_image.jpg";
 ---
 <Base title="Bottega Marchi – Home">
-<main class="relative h-[70vh] sm:h-[85vh] overflow-hidden rounded-2xl mx-6 sm:mx-8">
+  <main class="relative h-[70vh] sm:h-[85vh] overflow-hidden rounded-2xl mx-5">
     <div
       class="absolute inset-0 bg-center bg-cover"
       style={`background-image:url(${HERO}); animation:pan 24s linear infinite alternate;`}
       role="img" aria-label="Bottega Marchi workshop"
     ></div>
-    <div class="absolute inset-0 flex items-center justify-center">
-      <h1 class="brand text-[clamp(28px,6vw,54px)] text-[var(--text-bright)] drop-shadow">
+
+    <!-- Title + subtitle block (centered, lifted from the object) -->
+    <div class="absolute left-1/2 -translate-x-1/2 top-[22%] sm:top-[18%] md:top-[16%] text-center">
+      <h1
+        class="brand text-[clamp(28px,6vw,54px)] text-[var(--text-bright)] drop-shadow"
+      >
         Bottega&nbsp;Marchi
       </h1>
+      <p
+        class="mt-2 font-light text-[clamp(15px,2.9vw,30px)] text-[var(--text-bright)] drop-shadow"
+      >
+        furniture and objects
+      </p>
     </div>
   </main>
 
