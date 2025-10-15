@@ -5,7 +5,7 @@
   "description": "Le Tracce Series takes its inspiration from the traditional chiselling techniques used in decorative carvings on a Venetian gondola. By striking the surface with a burin, artisans concealed the marks of their tools while creating a background alive with movement and texture. The same technique can be found in embellishing architectural elements throughout Venice. Reinterpreted here in oak, maple or ashwood, the technique enhances the natural grain of each wood.",
   "order": 2,
   "specs": {
-    "lamp": "Dimensions small\nWxDxH: 10x10x30 cm\n250 €\n200 € without lampshade\nexcl. shipping\n\nDimensions large\nWxDxH: 12x12x50 cm\n350 €\n300 € without lampshade\nexcl. shipping\n\nAvailable in oak, maple or ashwood. Oil finished.\nCable length and colour as well as the switch function be modified upon request.",
+    "lamp": "Dimensions small\nWxDxH: 10x10x30 cm\n220 € without lampshade\nexcl. shipping\n\nDimensions large\nWxDxH: 12x12x50 cm\n330 € without lampshade\nexcl. shipping\n\nAvailable in oak, maple or ashwood. Oil finished.\nCable length and colour as well as the switch function be modified upon request.",
     "tray": "Dimensions small\nWxDxH: 30x15x4 cm\n45 €\nexcl. shipping\n\nDimensions large\nWxDxH: 50x15x4 cm\n65 €\nexcl. shipping\n\nAvailable in oak, maple and ash. Oil finished."
   },
   "pieces": [
@@ -13,7 +13,7 @@
     "title": "Column Lamp",
     "slug": "tracce-lamp-a",
     "cover": "/images/A1_Tracce.jpg",
-    "images": ["/images/A1_Tracce.jpg","/images/A2_Tracce.jpg"],
+    "images": ["/images/A1_Tracce.jpg","/images/A2_Tracce.jpg","/images/A3_Tracce.jpg"],
     "type": "lamp",
     "order": 1
   },

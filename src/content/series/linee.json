@@ -5,7 +5,7 @@
   "description": "Le Linee Series takes inspiration from the unique facade of a palazzo hidden on the island of Giudecca. Once an industrial area, the neighborhood was transformed in the 1980s, and the building’s singular new facade has since become a distinctive landmark of contemporary Venetian architecture.",
   "order": 1,
   "specs": {
-    "lamp": "Dimensions small\nWxDxH: 10x10x30 cm\n350 €\n300 € without lampshade\nexcl. shipping\n\nDimensions large\nWxDxH: 12x12x50 cm\n450 €\n400 € without lampshade\nexcl. shipping\n\nCable length and colour as well as the switch function can be modified upon request.",
+    "lamp": "Dimensions small\nWxDxH: 10x10x30 cm\n300 € without lampshade\nexcl. shipping\n\nDimensions large\nWxDxH: 12x12x50 cm\n400 € without lampshade\nexcl. shipping\n\nCable length and colour as well as the switch function can be modified upon request.",
     "tray": "Dimensions small\nWxDxH: 30x15x4 cm\n45 €\nexcl. shipping\n\nDimensions large\nWxDxH: 50x15x4 cm\n65 €\nexcl. shipping\n\nAvailable in oak, maple and ash. Oil finished."
   },
   "pieces": [
@@ -28,6 +28,8 @@
     "order": 2,
     "coverFocusY": 46,
   "coverScale": 0.985
+
+  
   },
   {
     "title": "Tray",
