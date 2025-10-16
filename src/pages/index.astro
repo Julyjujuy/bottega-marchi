@@ -11,25 +11,22 @@ const HERO = "/images/Homepage_image.jpg";
       role="img" aria-label="Bottega Marchi workshop"
     ></div>
 
-    <!-- Title + subtitle block (centered, lifted from the object) -->
+    <!-- Title + subtitle block -->
     <div class="absolute left-1/2 -translate-x-1/2 top-[22%] sm:top-[18%] md:top-[16%] text-center">
-      <h1
-        class="brand text-[clamp(28px,6vw,54px)] text-[var(--text-bright)] drop-shadow"
-      >
+      <h1 class="brand text-[clamp(28px,6vw,54px)] text-[var(--text)]">
         Bottega&nbsp;Marchi
       </h1>
-      <p
-        class="mt-2 font-light text-[clamp(15px,2.9vw,30px)] text-[var(--text-bright)] drop-shadow"
-      >
+      <p class="mt-2 font-light text-[clamp(15px,2.9vw,30px)] text-[var(--text)]">
         furniture and objects
       </p>
     </div>
   </main>
 
   <style>
+    /* pan horizontally, but keep the vertical position a bit higher (38%) */
     @keyframes pan {
-      0%   { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
+      0%   { background-position: 0% 38%; }
+      100% { background-position: 100% 38%; }
     }
     @media (max-width: 640px){
       main > div:first-child{ background-size: cover; }
